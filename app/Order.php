@@ -16,7 +16,7 @@ class Order extends Model
     	'contact',
     	'shipping_city',
 		'shipping_state',
-		'shipping_address1', 
+		'shipping_address1', s
     	'shipping_address2',
     	'shipping_landmark',
     	'status'
