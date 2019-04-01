@@ -22,7 +22,7 @@ class Order extends Model
     	'status'
     ];
 
-    function orders() {
-        return $this->belongsToMany('App\User');
+    function user() {
+        return $this->belongsTo('App\User');
     }
 }

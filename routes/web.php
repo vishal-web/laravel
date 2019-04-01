@@ -32,8 +32,9 @@ Route::get('/user/{id}/{name}', function($id, $name) {
 });*/
 
 
+// Route::get('/', 'UserController@index');
 
-Route::get('/', 'UserController@signup');
+/*Route::get('/', 'UserController@signup');
 
 Route::get('/user', 'UserController@index');
 
@@ -58,3 +59,46 @@ Route::get('/create-order','UserController@createOrder');
 Route::post('/create-order','UserController@validateOrderForm');
 
 Route::get('/view-order/{order_id}','UserController@viewOrder');
+*/
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
+
+
+
+Route::get('/user/manage-users','UserController@manageUser')->name('userList');
+Route::get('/user/{user_id}/permission','UserController@assignPermissionToUser');
+Route::get('/user/{user_id}/role','UserController@assignRoleToUser');
+Route::post('/user/{user_id}/permission','UserController@validateAssignPermissionToUser');
+Route::post('/user/{user_id}/role','UserController@validateAssignPermissionToUser');
+
+
+Route::get('/roles/show','UserController@roleShow')->name('roleList');
+Route::get('/roles/create','UserController@roleCreate')->name('roleCreate');
+Route::get('/roles/{role_id}/edit','UserController@roleEdit')->name('roleEdit');
+Route::get('/roles/destroy','UserController@roleDestroy')->name('roleDestroy');
+Route::post('/roles/create','UserController@validateCreateRole');
+Route::post('/roles/{role_id}/edit','UserController@roleUpdate');
+
+
+Route::get('/permissions/show','UserController@permissionShow')->name('permissionList');
+Route::get('/permissions/create','UserController@permissionCreate')->name('permissionCreate');
+Route::get('/permissions/{permission_id}/edit','UserController@permissionEdit')->name('permissionEdit');
+Route::get('/permissions/destroy','UserController@permissionDestroy')->name('permissionDestroy');
+Route::post('/permissions/create','UserController@validatePermission');
+Route::post('/permissions/{permission_id}/edit','UserController@validatePermission'); 
+
+
+Route::get('/post','PostController@index')->name('postList');
+Route::get('/post/{update_id}/edit','PostController@edit')->name('postEdit');
+Route::get('/post/create','PostController@create')->name('post');
+Route::post('/post/{update_id}/edit','PostController@validatePost');
+Route::post('/post/create','PostController@validatePost');
+
+/*
+	Route::group(['middleware' => ['auth']], function () {
+	Route::resource('role', 'RoleController');
+	Route::resource('users', 'UserController');
+	Route::resource('products', 'ProductController');
+});*/

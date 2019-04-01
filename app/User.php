@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable , HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -30,4 +31,16 @@ class User extends Authenticatable
     function orders() {
         return $this->hasMany('App\Order');
     }
+
+        public function toArray() {
+            $attributes = $this->attributesToArray();
+            $attributes = array_merge($attributes, $this->relationsToArray());
+
+    // Detect if there is a pivot value and return that as the default value
+            if (isset($attributes['roles']['value'])) {
+                $attributes['value'] = $attributes['roles']['value'];
+                unset($attributes['roles']);
+            }
+            return $attributes;
+        }
 }
