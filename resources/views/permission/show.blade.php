@@ -7,9 +7,11 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					Permissions 
+					@can('permissionCreate')
 					<div class="pull-right">
 						<p><a href="/permissions/create">Create Permission</a></p>
 					</div>
+					@endcan
 				</h3>
 			</div>
 			<div class="panel-body">
@@ -47,8 +49,13 @@
 							<td>{{ ++$i }}</td>
 							<td>{{ $permission->name }}</td>
 							<td class="col-md-3"> 
+
+								@can('permissionEdit')
 								<a class='btn btn-primary btn-xs' href="/permissions/{{ $permission->id }}/edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-								<a class='btn btn-danger btn-xs' href="/permissions/{{ $permission->id }}/delete"><i class="glyphicon glyphicon-trash"></i> Delete</a>  
+								@endcan
+								@can('permissionDestroy')
+								<a class='btn btn-danger btn-xs' href="/permissions/{{ $permission->id }}/destroy"><i class="glyphicon glyphicon-trash"></i> Delete</a>  
+								@endcan
 							</td>
 								 
 						</tr> 

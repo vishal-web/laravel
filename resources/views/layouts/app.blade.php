@@ -10,9 +10,9 @@
 
 	<title>{{ config('app.name', 'Laravel') }}</title>
  
-	{{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="//code.jquery.com/jquery.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> --}}
+	{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> --}}
 
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -49,10 +49,22 @@
 							<li><a href="{{ route('login') }}">Login</a></li>
 							<li><a href="{{ route('register') }}">Register</a></li>
 						@else
+							@can('roleList')
 							<li><a href="/roles/show">Roles</a></li>
+							@endcan
+
+							@can('permissionList')
 							<li><a href="/permissions/show">Permissions</a></li>
+							@endcan
+
+							@can('postList')
 							<li><a href="/post">Post</a></li>
+							@endcan
+
+							@can('userList')
 							<li><a href="/user/manage-users">Users</a></li>
+							@endcan
+							
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
 									{{ Auth::user()->name }} <span class="caret"></span>

@@ -7,9 +7,11 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					Roles 
+					@can('roleCreate')
 					<div class="pull-right">
 						<p><a href="/roles/create">Create Role</a></p>
 					</div>
+					@endcan
 				</h3>
 			</div>
 			<div class="panel-body">
@@ -47,8 +49,12 @@
 							<td>{{ ++$i }}</td>
 							<td>{{ $role->name }}</td>
 							<td class="col-md-3"> 
+								@can('roleCreate')
 								<a class='btn btn-primary btn-xs' href="/roles/{{ $role->id }}/edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-								<a class='btn btn-danger btn-xs' href="/roles/{{ $role->id }}/delete"><i class="glyphicon glyphicon-trash"></i> Delete</a>  
+								@endcan
+								@can('roleCreate')
+								<a class='btn btn-danger btn-xs' href="/roles/{{ $role->id }}/destroy"><i class="glyphicon glyphicon-trash"></i> Delete</a>  
+								@endcan
 							</td>
 								 
 						</tr> 

@@ -6,9 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    //
+
     protected $table = "post";
-    protected $fillable = [
+
+    public $fillable = [
     	'title', 'body'
+   	];
+
+   	protected $mappingProperties = [
+   		'title' => [
+   			'type' => 'string',
+   			'analyzer' => 'standard'
+   		],
+   		'body' => [
+   			'type' => 'string',
+   			'analyzer' => 'standard'
+   		],
    	];
 }

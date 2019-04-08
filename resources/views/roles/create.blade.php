@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+<style type="text/css">
+	.checkbox-inline {
+		width: 20%;
+		margin-left: 10px;
+	}
+</style>
 @section('content')
 
 <div class="container">

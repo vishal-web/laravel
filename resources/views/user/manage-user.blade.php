@@ -7,9 +7,11 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					Manage Users	
+					@can('userCreate')
 					<div class="pull-right">
 						<a href="/user/create">Create User</a>
 					</div>
+					@endcan
 				</h3>
 			</div>
 			<div class="panel-body">
@@ -33,7 +35,9 @@
 							<td>{{ $user->name }}</td>
 							<td>{{ $user->email }}</td> 
 							<td>
+								@can('userRole')
 								<a href="/user/{{ $user->id }}/role">Assign Role</a> 
+								@endcan
 							</td>
 						</tr> 
 					@endforeach

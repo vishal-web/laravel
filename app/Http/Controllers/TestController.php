@@ -29,7 +29,6 @@ class TestController extends Controller
 		$data['title'] = "Welcome to user dashboard";
 		$data['description'] = "This is a template for a simple marketing or informational website. ";
 
-
 		return view('user/user')->with($data);
 		// you can also use compact at the place of with 
 		// view('user.user', compact('title'));

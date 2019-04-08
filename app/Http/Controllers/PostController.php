@@ -5,11 +5,47 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Validator;
+use Elasticsearch\ClientBuilder;
+
 
 class PostController extends Controller
 {
-  //
+
+  function __construct() {
+    $this->middleware(function ($request, $next) {
+      checkPermission();
+      return $next($request);
+    });
+  }
+
   function index(Request $request) {
+
+    /*
+    // for bulk indexing documents
+    $posts = Post::all()->toArray();
+
+    $client = ClientBuilder::create()->build();
+
+    $params = ['body' => []];
+
+    foreach ($posts as $post) {
+      $params['body'][] = [
+        'index' => [
+          '_index' => 'posts',
+          '_type' => 'post',
+          '_id' => $post['id']
+        ]
+      ];
+
+      $params['body'][] = [
+        'title' => $post['title'],
+        'body' => $post['body']
+      ];
+    }
+
+    $response = $client->bulk($params);*/
+
+
   	$data['posts'] = Post::orderBy('id','desc')->paginate(10); 
   	return view('post.index', $data);
   }
@@ -52,6 +88,8 @@ class PostController extends Controller
   		]
 		);
 
+    $elasticClient = ClientBuilder::create()->build(); 
+
   	if (!$validator->fails()) {
 
   		$validatedData = $validator->getData();
@@ -66,6 +104,16 @@ class PostController extends Controller
 
  					$updatePost = Post::where('id',$update_id)->update($data);
 
+          $elasticSearchData = [
+            'index' => 'posts',
+            'type' => 'post',
+            'id'  => $update_id,
+            'body' => ['doc' => $data]
+          ];
+
+
+          $response = $elasticClient->update($elasticSearchData); 
+
  					if ($updatePost) {
  						$return['success'] = "Post data has been successfully updated.";
  					} else {
@@ -79,7 +127,17 @@ class PostController extends Controller
  			} else {
  				// create a new post
  				$createPost = Post::create($data);
- 				
+        
+        // store data into elastic 
+        $elasticSearchData = [
+          'index' => 'posts',
+          'type' => 'post',
+          'id'  => $createPost->id,
+          'body' => $data
+        ];
+
+        $response = $elasticClient->index($elasticSearchData); 
+
  				if ($createPost) {
  					$return['success'] = "Your new post has been successfully posted.";
  				} else {

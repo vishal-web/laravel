@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  title: 'Laravel Swagger'
+  description: ''
+  termsOfService: 'terms urls will be here'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: 'Apache 2.0'
+    url: 'licence url will be here'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000/'
+    description: 'Api host'
+paths:
+  /getPosts:
+    get:
+      tags:
+        - Post
+      description: 'Return all posts'
+      operationId: 'App\Http\Controllers\GetComponentDetailController::getPost'
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: 'Please provide both data'
+  '/getPostById/{id}':
+    get:
+      tags:
+        - Post
+      description: 'Fetch post details by id'
+      operationId: 'App\Http\Controllers\GetComponentDetailController::getPostById'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Reffered as post id'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: 'Please provide id'
+        '422':
+          description: 'Missing or Invalid Parameter '
+  /createPost:
+    post:
+      tags:
+        - Post
+      description: 'Create New Post'
+      operationId: 'App\Http\Controllers\GetComponentDetailController::createPost'
+      requestBody:
+        description: 'Post object that needs to be added to post'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '200':
+          description: OK
+        '405':
+          description: 'Validation Error'
+components:
+  schemas:
+    Post:
+      required:
+        - title
+        - body
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+      type: object
+      xml:
+        name: Post
+externalDocs:
+  description: 'Find out more about Swagger'
+  url: 'http://swagger.io'

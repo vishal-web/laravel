@@ -16,25 +16,8 @@ class UserController extends Controller {
 
 	public function __construct(Request $request) {
 
-		$routeCollection = Route::getRoutes();
-
-		/*		
-				foreach ($routeCollection as $value) {
-					// echo $value->getaNames();
-				}
-		*/
-
 		$this->middleware(function ($request, $next) {
-			$permissions = Permission::all()->pluck(['name'])->toArray();
-
-			echo '<pre>';
-			print_r($permissions);
-			echo '</pre>';
-
-			echo '<pre>';
-			print_r(Session::all());
-			echo '</pre>';
-			die();
+			checkPermission();
 			return $next($request);
 		});
 	}
@@ -363,7 +346,7 @@ class UserController extends Controller {
 			return redirect()->back()->withErrors($validator)->withInput();
 		}
 	}
-
+ 
 
 	public function roleUpdate(Request $request) {
 		$validator = Validator::make($request->all(), 
@@ -424,6 +407,18 @@ class UserController extends Controller {
 		$data['title'] = 'Permission | Edit';
 		return view('permission.create', $data);
 	}
+
+	public function permissionDestroy(Request $request) {
+		$permission_id = $request->route('permission_id');
+
+		$permission_delete = Permission::where('id',$permission_id)->delete();
+ 		
+		if ($permission_delete) {
+			return redirect()->back()->with(['success' => 'Permission removed successfully']);
+		} else {
+			return redirect()->back()->with(['error' => 'Something went wrong']);
+		}
+ 	}
 
 	public function validatePermission(Request $request) {
 
