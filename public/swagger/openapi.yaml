@@ -51,7 +51,7 @@ paths:
       tags:
         - Post
       description: 'Create New Post'
-      operationId: 'App\Http\Controllers\GetComponentDetailController::createPost'
+      operationId: createPost
       requestBody:
         description: 'Post object that needs to be added to post'
         required: true

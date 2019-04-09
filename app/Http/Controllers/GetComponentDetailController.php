@@ -46,7 +46,7 @@ class GetComponentDetailController extends Controller
 			tags={"Post"},
 			path="/getPostById/{id}",
 			description="Fetch post details by id",
-
+			operationId="getPostById",
 			@OA\Parameter(
 				name="id",
 				in="path",
@@ -87,7 +87,7 @@ class GetComponentDetailController extends Controller
 			tags={"Post"},
 			path="/createPost",
 			description="Create New Post",
-			
+			operationId="createPost",
 			@OA\RequestBody(
 				required=true,
 				description="Post object that needs to be added to post", 
@@ -137,4 +137,3 @@ class GetComponentDetailController extends Controller
     	return $response;
     }
 }
-	
